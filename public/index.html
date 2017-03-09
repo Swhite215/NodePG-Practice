@@ -10,9 +10,9 @@
     <h2>TODO List</h2>
 
     <!-- Add a model to this input -->
-    <input type="text" placeholder="Thing To Do">
+    <input type="text" placeholder="Thing To Do" ng-model="addItem">
     <!-- Add ng-click to this button to send our input to the controller -->
-    <button type="button">Add</button>
+    <button type="button" ng-click="addTask(addItem)">Add</button>
 
     <hr>
 
@@ -21,15 +21,14 @@
       <p>
         {{task.todo}}
         <!-- Add ng-click to this button to send our input to the controller -->
-        <button type="button">Delete</button>
+        <button type="button" ng-click="removeTask(task.id)">Delete</button>
       </p>
 
       <!-- Add a model to this input -->
-      <input class="editStuff" type="text" placeholder="Change Thing">
+      <input class="editStuff" type="text" placeholder="Change Thing" ng-model="changeItem">
       <!-- Add ng-click to this button to send our input to the controller -->
-      <button class="editStuff" type="button">Edit!</button>
+      <button class="editStuff" type="button" ng-click="changeTask(changeItem, task.id)">Edit!</button>
     </div>
-
 
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

@@ -8,7 +8,10 @@ app.factory('todoService', function($http) {
   return {
     // Establish our key/value pairs for our functions
     retrieveData: retrieveData,
-    updateList: updateList
+    updateList: updateList,
+    deleteData: deleteData,
+    addData: addData,
+    editData: editData
   }
 
   // Write out our functions, one for each CRUD command(GET, POST, PUT, DELETE)
@@ -29,5 +32,47 @@ app.factory('todoService', function($http) {
     return todos;
   }
 
+  //function to delete an item from the server
+  function deleteData(taskId) {
+    var promise = $http({
+      method: 'DELETE',
+      url: '/delete-things/' + taskId
+    }).then(function successfulCallback(response) {
+      console.log(response);
+      todos = response.data;
+    }, function(error) {
+      console.log(error);
+    });
+    return promise;
+  }
+
+  //function to add an item to the server.
+  function addData(addItem) {
+    var promise = $http({
+      method: 'POST',
+      url: '/add-thing',
+      data: {
+        todo: addItem
+    }
+    }).then(function successfulCallback(response) {
+      console.log(response);
+      todos = response.data;
+    });
+    return promise;
+  }
+
+  //function to edit an item on the server
+  function editData(changeObject) {
+    var promise = $http({
+      method: 'PUT',
+      url: '/update-thing/' + changeObject.id,
+      data: changeObject.todo
+    }).then(function successfulCallback(response) {
+      todos = response.data;
+    }, function(error) {
+      console.log(error);
+    });
+    return promise;
+  }
 
 });
