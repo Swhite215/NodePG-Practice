@@ -1,6 +1,15 @@
 var express = require('express');
+//server module
 var app = express();
-// Add Node-PG + bodyParser
+var pg = require('pg');
+//will parse through the data I am sending and receieving.
+var bodyParser = require('body-parser');
+//string to define connection to pg.
+var connectionString = 'postgres://postgres:grandcircuspg@localhost:5432/postgres';
+//creates client based on connection to pg.
+var client = new pg.Client(connectionString);
+
+
 
 // Add config bodyParser
 app.use(express.static(__dirname + '/public'));
