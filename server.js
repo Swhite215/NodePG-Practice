@@ -9,9 +9,19 @@ var connectionString = 'postgres://postgres:grandcircuspg@localhost:5432/postgre
 //creates client based on connection to pg.
 var client = new pg.Client(connectionString);
 
+var config = {
+  user: 'postgres',
+  database: 'postgres',
+  password: 'grandcircuspg',
+  host: 'localhost',
+  port: 5432,
+  max: 100,
+  idleTimeoutMillis: 30000
+};
 
-
-// Add config bodyParser
+var pool = new pg.Pool(config);
+// bodyParser converts to JSON and makes it accessible.
+app.use(bodyParser.json({ extended: true}));
 app.use(express.static(__dirname + '/public'));
 
 
