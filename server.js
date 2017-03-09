@@ -96,6 +96,37 @@ app.post('/add-thing', function(req, res, next) {
 
 });
 
+app.put('/update-thing/:id', function(req, res, next) {
+  var results = [];
+  var id = req.params.id;
+  var data = {
+    todo: req.body.todo
+  };
+  console.log(data);
+
+  pool.connect(function(err, client, done) {
+    if(err) {
+      done();
+      return res.status(500).json({
+        success: false,
+        data: err
+      });
+    }
+    client.query('UPDATE todo SET todo=($1) WHERE id=($2)', [data.todo, id]);
+
+    var query = client.query('SELECT * FROM todo ORDER BY todo');
+    query.on('row', function(row) {
+      results.push(row);
+    });
+    query.on('end', function(){
+      done();
+      return res.json(results);
+    });
+  });
+
+
+});
+
 var server = app.listen(3000, function() {
   var port = server.address().port;
   console.log('PostgreSQL server running at http://localhost:%s', port);

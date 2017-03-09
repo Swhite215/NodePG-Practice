@@ -61,12 +61,15 @@ app.factory('todoService', function($http) {
     return promise;
   }
 
-  //function to edit an item on the server
+  //function to edit a data entry on the server
   function editData(changeObject) {
+    var todo = {
+      todo: changeObject.todo
+    };
     var promise = $http({
       method: 'PUT',
       url: '/update-thing/' + changeObject.id,
-      data: changeObject.todo
+      data: todo
     }).then(function successfulCallback(response) {
       todos = response.data;
     }, function(error) {
