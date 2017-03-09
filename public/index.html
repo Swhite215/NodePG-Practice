@@ -17,8 +17,9 @@
     <hr>
 
     <!-- This is DIV is what will be repeated with ng-repeat to display our information -->
-    <div>
+    <div ng-repeat="task in thingsToDo">
       <p>
+        {{task.todo}}
         <!-- Add ng-click to this button to send our input to the controller -->
         <button type="button">Delete</button>
       </p>

@@ -24,7 +24,26 @@ var pool = new pg.Pool(config);
 app.use(bodyParser.json({ extended: true}));
 app.use(express.static(__dirname + '/public'));
 
+app.get('/get-things', function(req, res, next) {
+  var results = [];
+  pg.connect(connectionString, function(err, client, done) {
 
+    // client.query('INSERT INTO todo (todo) values($1)', ['swim']);
+
+    var query = client.query('SELECT * FROM todo ORDER BY todo');
+
+    query.on('row', function(row) {
+      results.push(row);
+    });
+
+    query.on('end', function() {
+      console.log(results);
+      client.end();
+      return res.json(results);
+    });
+
+  });
+});
 // Add a route for each CRUD command: GET, POST, PUT, DELETE
 
 
